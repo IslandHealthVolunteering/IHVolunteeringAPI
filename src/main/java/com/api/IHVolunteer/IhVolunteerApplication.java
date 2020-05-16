@@ -1,13 +1,13 @@
-package com.example.IHVolunteerApi;
+package com.api.IHVolunteer;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class IhVolunteerApiApplication {
+public class IhVolunteerApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(IhVolunteerApiApplication.class, args);
+		SpringApplication.run(IhVolunteerApplication.class, args);
 	}
 
 }
