@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using IHVolunteerAPIData.Models;
 using Microsoft.AspNetCore.Mvc;
+using IHVolunteerAPI.Security;
+using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace IHVolunteerAPI.Controllers
 {
@@ -24,20 +24,23 @@ namespace IHVolunteerAPI.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateUser()
+        public IActionResult CreateUser([FromBody] User user)
         {
-            var user = new User()
+            var userToCreate = user;
+
+            try
             {
-                Name = "Test User",
-                Email = "testuser@example.com",
-                VolunteerHours = 10,
-                Password = "verysecurepassword"
-            };
+                Context.Add(userToCreate);
+                Context.SaveChanges();
+            }
+            catch(DbUpdateException dbe)
+            {
+                Console.WriteLine("An error occurred when updating the entries " + dbe);
 
-            Context.Add(user);
-            Context.SaveChanges();
+                return BadRequest("Please make sure you have created login creds with this email address");
+            }
 
-            return Ok("Successfully created user with email " + user.Email);
+            return Created("/api/user", "User " + userToCreate.Email + " successfully created");
         }
     }
 }

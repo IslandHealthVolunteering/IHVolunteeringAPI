@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace IHVolunteerAPIData.Models
 {
@@ -9,15 +10,12 @@ namespace IHVolunteerAPIData.Models
         {
         }
 
-        public Guid Id { get; set; }
-
         public string Name { get; set; }
 
         public int VolunteerHours { get; set; }
 
+        [Key]
+        [ForeignKey("Email")]
         public string Email { get; set; }
-
-        [DataType(DataType.Password)]
-        public string Password { get; set; }
     }
 }

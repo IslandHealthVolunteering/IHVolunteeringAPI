@@ -12,8 +12,12 @@ namespace IHVolunteerAPIData.Models
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
-            => modelBuilder.ApplyConfiguration(new IHVolunteerAPIConfiguration());
+        {
+            modelBuilder.ApplyConfiguration(new IHVolunteerAPIConfiguration());
+        }
 
         public DbSet<User> User { get; set; }
+
+        public DbSet<LoginUser> LoginUser { get; set; }
     }
 }

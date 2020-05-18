@@ -8,7 +8,7 @@ namespace IHVolunteerAPIData.Models.ModelConfigurations
     {
         public void Configure(EntityTypeBuilder<User> builder)
         {
-            builder.HasKey(prop => prop.Id);
+            builder.HasKey(prop => prop.Email);
 
             builder.Property(prop => prop.Name)
                 .HasMaxLength(50)
@@ -20,9 +20,18 @@ namespace IHVolunteerAPIData.Models.ModelConfigurations
 
             builder.Property(prop => prop.VolunteerHours)
                 .IsRequired();
+        }
+
+        public void Configure(EntityTypeBuilder<LoginUser> builder)
+        {
+            builder.HasKey(prop => prop.Email);
+
+            builder.Property(prop => prop.Email)
+                .HasMaxLength(100)
+                .IsRequired();
 
             builder.Property(prop => prop.Password)
-                .HasMaxLength(100)
+                .HasMaxLength(1000)
                 .IsRequired();
         }
     }
