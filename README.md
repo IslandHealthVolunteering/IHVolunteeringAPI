@@ -1,5 +1,5 @@
 # IHVolunteeringAPI
-RESTFul API to serve data to and from the IH Volunteering applications
+RESTful API to serve data to and from the IH Volunteering applications
 
 ## Running locally
 From the `IHVolunteerAPI` directory of the project, run the following:
