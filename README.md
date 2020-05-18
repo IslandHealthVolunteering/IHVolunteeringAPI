@@ -2,7 +2,7 @@
 RESTful API to serve data to and from the IH Volunteering applications
 
 ## Running locally
-From the `IHVolunteerAPI` directory of the project, run the following:
+From the `IHVolunteerAPI` directory of the project where the `.csproj` folder exists, run the following:
 
 ```bash
 dotnet run
