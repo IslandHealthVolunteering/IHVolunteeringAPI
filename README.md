@@ -8,8 +8,10 @@ From the `IHVolunteerAPI` directory of the project where the `.csproj` folder ex
 dotnet run
 ```
 
-This should spin up the server locally, accessible on `https://localhost:5008`.
+This should spin up the server locally, accessible on `https://localhost:5008/api/<Route>`.
+
+## Swagger
+A Swagger Open API spec for the API should load automatically when the application is run, but is also accessible on `https://localhost:5008`.
 
 ## Postgres
-
 You need to have an instance of postgres running on port 5432 for the API to communicate with.
