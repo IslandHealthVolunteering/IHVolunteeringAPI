@@ -1,5 +1,5 @@
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1 AS build
-WORKDIR /IHVolunteerAPI
+WORKDIR /IHVolunteerAPI/IHVolunteerAPI
 
 # Copy csproj and restore as distinct layers
 COPY *.csproj .
@@ -11,7 +11,7 @@ RUN dotnet publish -c Release -o out
 
 # Build runtime image
 FROM mcr.microsoft.com/dotnet/core/aspnet AS runtime
-WORKDIR /IHVolunteerAPI
+WORKDIR /IHVolunteerAPI/IHVolunteerAPI
 COPY --from=build /app/out .
 
 ENTRYPOINT ["dotnet", "api.dll"]
