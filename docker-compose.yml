@@ -2,6 +2,7 @@ version: "3.5"
 
 services: 
     api:
+        working_dir: IHVolunteerAPI/IHVolunteerAPI
         container_name: IHVolunteerAPI
         restart: always
         build:
