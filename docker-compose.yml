@@ -6,7 +6,7 @@ services:
         container_name: IHVolunteerAPI
         restart: always
         build:
-            context: IHVolunteerAPI
+            context: IHVolunteerAPI/IHVolunteerAPI
         environment: 
             - CONNECTIONSTRINGS__APIDBCONTEXT=host=postgres;port=5432;database=postgres;username=shreyasdevalapurkar;
             - ASPNETCORE_URLS=http://+:5007
