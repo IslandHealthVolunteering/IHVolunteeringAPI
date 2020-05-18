@@ -21,6 +21,11 @@ namespace IHVolunteerAPI.Controllers
             // get user info from request body
             var user = loginUser;
 
+            if (null == user || null == user.Email || null == user.Password)
+            {
+                return BadRequest("Please provide all required fields in the body of your request");
+            }
+
             // check to see if user exists in DB
             var userFromDB = Context.LoginUser
                 .SingleOrDefault(u => u.Email == user.Email);
