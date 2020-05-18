@@ -15,14 +15,6 @@ namespace IHVolunteerAPI.Controllers
         public LoginUserController(IHVolunteerAPIContext context)
             => Context = context;
 
-        [HttpGet]
-        public IActionResult GetUser()
-        {
-            var loginUsers = Context.LoginUser.ToList();
-
-            return Ok(loginUsers);
-        }
-
         [HttpPost]
         public IActionResult LoginUser([FromBody] LoginUser loginUser)
         {

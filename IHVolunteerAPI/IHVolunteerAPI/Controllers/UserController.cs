@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 using IHVolunteerAPIData.Models;
 using Microsoft.AspNetCore.Mvc;
-using IHVolunteerAPI.Security;
 using Microsoft.EntityFrameworkCore;
 using System;
 
@@ -15,12 +14,18 @@ namespace IHVolunteerAPI.Controllers
         public UserController(IHVolunteerAPIContext context)
             => Context = context;
 
-        [HttpGet]
-        public IActionResult GetUser()
+        [HttpGet("{email}")]
+        public IActionResult GetUser([FromRoute] string email)
         {
-            var users = Context.User.ToList();
+            var userFromDB = Context.User
+                .SingleOrDefault(u => u.Email == email);
 
-            return Ok(users);
+            if (null != userFromDB)
+            {
+                return Ok(userFromDB);
+            }
+
+            return NoContent();
         }
 
         [HttpPost]
