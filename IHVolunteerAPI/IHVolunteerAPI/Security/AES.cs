@@ -10,6 +10,39 @@ namespace IHVolunteerAPI.Security
         {
         }
 
+//        string original = "Please let me dip them mannn";
+
+//            // Create a new instance of the Aes
+//            // class.  This generates a new key and initialization
+//            // vector (IV).
+//            using (Aes myAes = Aes.Create())
+//            {
+//                byte[] key = new byte[]
+//                {
+//                    15, 14, 24, 44, 98, 12, 34, 23,
+//                    97, 88, 91, 26, 77, 59, 25, 56
+//                };
+//    myAes.Key = key;
+
+//                byte[] IV = new byte[]
+//                {
+//                    11, 12, 13, 14, 18, 12, 2, 22,
+//                    7, 88, 91, 6, 77, 59, 225, 6
+//                };
+//    myAes.IV = IV;
+
+//                // Encrypt the string to an array of bytes.
+//                byte[] encrypted = AES.EncryptStringToBytes_Aes(original, myAes.Key, myAes.IV);
+
+//                foreach(byte c in encrypted)
+//                {
+//                    Console.WriteLine(c);
+//                }
+
+//// Decrypt the bytes to a string.
+//string decrypted = AES.DecryptStringFromBytes_Aes(encrypted, myAes.Key, myAes.IV);
+//            }
+
         public static byte[] EncryptStringToBytes_Aes(string plainText, byte[] Key, byte[] IV)
         {
             // Check arguments.
