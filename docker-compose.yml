@@ -2,7 +2,6 @@ version: "3.5"
 
 services: 
     api:
-        working_dir: IHVolunteerAPI/IHVolunteerAPI
         container_name: IHVolunteerAPI
         restart: always
         build:
@@ -17,7 +16,14 @@ services:
         networks:
             - net
         depends_on:
-            - postgres  
+            - postgres
+    data:
+        container_name: IHVolunteerAPIData
+        restart: always
+        build:
+            context: IHVolunteerAPI/IHVolunteerAPIData
+        networks:
+            - net 
     postgres:
         restart: always
         container_name: db
