@@ -17,13 +17,6 @@ services:
             - net
         depends_on:
             - postgres
-    data:
-        container_name: IHVolunteerAPIData
-        restart: always
-        build:
-            context: IHVolunteerAPI/IHVolunteerAPIData
-        networks:
-            - net 
     postgres:
         restart: always
         container_name: db
