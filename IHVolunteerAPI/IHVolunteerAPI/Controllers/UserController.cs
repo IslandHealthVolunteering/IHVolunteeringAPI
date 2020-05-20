@@ -20,6 +20,10 @@ namespace IHVolunteerAPI.Controllers
         [HttpGet("{email}")]
         public IActionResult GetUser([FromRoute] string email)
         {
+            // try pulling env var
+            var variable = Environment.GetEnvironmentVariable("SECRET_KEY");
+            Console.WriteLine("environment variable is: " + variable);
+
             var userFromDB = Context.User
                 .SingleOrDefault(u => u.Email == email);
 
