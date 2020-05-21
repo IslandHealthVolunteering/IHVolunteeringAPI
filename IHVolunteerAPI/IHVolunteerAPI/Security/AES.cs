@@ -1,50 +1,31 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Security.Cryptography;
+using System.Text;
+using Microsoft.Extensions.Configuration;
 
 namespace IHVolunteerAPI.Security
 {
     public class AES
     {
-        public AES()
+        public static IConfiguration Configuration;
+
+        public AES(IConfiguration configuration)
         {
+            Configuration = configuration;
         }
 
-//        string original = "Please let me dip them mannn";
-
-//            // Create a new instance of the Aes
-//            // class.  This generates a new key and initialization
-//            // vector (IV).
-//            using (Aes myAes = Aes.Create())
-//            {
-//                byte[] key = new byte[]
-//                {
-//                    15, 14, 24, 44, 98, 12, 34, 23,
-//                    97, 88, 91, 26, 77, 59, 25, 56
-//                };
-//    myAes.Key = key;
-
-//                byte[] IV = new byte[]
-//                {
-//                    11, 12, 13, 14, 18, 12, 2, 22,
-//                    7, 88, 91, 6, 77, 59, 225, 6
-//                };
-//    myAes.IV = IV;
-
-//                // Encrypt the string to an array of bytes.
-//                byte[] encrypted = AES.EncryptStringToBytes_Aes(original, myAes.Key, myAes.IV);
-
-//                foreach(byte c in encrypted)
-//                {
-//                    Console.WriteLine(c);
-//                }
-
-//// Decrypt the bytes to a string.
-//string decrypted = AES.DecryptStringFromBytes_Aes(encrypted, myAes.Key, myAes.IV);
-//            }
-
-        public static byte[] EncryptStringToBytes_Aes(string plainText, byte[] Key, byte[] IV)
+        public static byte[] EncryptStringToBytes_Aes(string plainText)
         {
+            // pulling env var
+            var apiKey = Configuration["API:Key"];
+            var apiInitializationVector = Configuration["API:IV"];
+
+            // Convert a string to a byte array  
+            byte[] Key = Encoding.UTF8.GetBytes(apiKey);
+            byte[] IV = Encoding.UTF8.GetBytes(apiInitializationVector);
+
             // Check arguments.
             if (plainText == null || plainText.Length <= 0)
                 throw new ArgumentNullException("plainText");
@@ -124,6 +105,14 @@ namespace IHVolunteerAPI.Security
             }
 
             return plaintext;
+        }
+
+        private static Random random = new Random();
+        public static string RandomString(int length)
+        {
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            return new string(Enumerable.Repeat(chars, length)
+              .Select(s => s[random.Next(s.Length)]).ToArray());
         }
     }
 }
