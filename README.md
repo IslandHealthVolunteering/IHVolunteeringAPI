@@ -14,4 +14,10 @@ This should spin up the server locally, accessible on `https://localhost:5008/ap
 A Swagger Open API spec for the API should load automatically when the application is run, but is also accessible on `https://localhost:5008`.
 
 ## Postgres
-You need to have an instance of postgres running on port 5432 for the API to communicate with.
+You need to have an instance of postgres running on port 5432 for the API to communicate with. To get an instance spun up, run:
+
+```bash
+docker-compose up --build postgres
+```
+
+You may need to modify the configuration to have the proper `Username` value for your DB context. This value is typically set to `postgres`.

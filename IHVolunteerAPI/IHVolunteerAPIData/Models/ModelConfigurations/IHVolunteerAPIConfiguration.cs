@@ -33,6 +33,8 @@ namespace IHVolunteerAPIData.Models.ModelConfigurations
             builder.Property(prop => prop.Password)
                 .HasMaxLength(1000)
                 .IsRequired();
+
+            builder.Property(prop => prop.Secret);
         }
     }
 }
