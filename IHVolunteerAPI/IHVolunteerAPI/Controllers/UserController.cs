@@ -112,8 +112,7 @@ namespace IHVolunteerAPI.Controllers
                     // Ecryption
                     using (Aes myAes = Aes.Create())
                     {
-                        // var secret = AES.RandomString(24);
-                        var secret = "ahmedman";
+                        var secret = AES.RandomString(24);
 
                         // pulling env var and store in variables for use
                         apiKey = Configuration["API:Key"];
@@ -170,8 +169,7 @@ namespace IHVolunteerAPI.Controllers
             // Ecryption
             using (Aes myAes = Aes.Create())
             {
-                // var secret = AES.RandomString(24);
-                var secret = "ahmedman";
+                var secret = AES.RandomString(24);
 
                 // pulling env var and store in variables for use
                 apiKey = Configuration["API:Key"];
