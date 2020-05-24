@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Security.Cryptography;
+using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 
 namespace IHVolunteerAPI.Security
 {
@@ -18,36 +19,33 @@ namespace IHVolunteerAPI.Security
 
         public static string HashPassword(string password)
         {
-            var cryptoProvider = new RNGCryptoServiceProvider();
-            byte[] salt = new byte[SaltByteSize];
-            cryptoProvider.GetBytes(salt);
+            // generate a 128-bit salt using a secure PRNG
+            byte[] salt = new byte[128 / 8];
+            string saltstring = "NZsP6NnmfBuYeJrrAKNuVQ==";
+            salt = System.Convert.FromBase64String(saltstring);
 
-            var hash = GetPbkdf2Bytes(password, salt, Pbkdf2Iterations, HashByteSize);
-            return Pbkdf2Iterations + ":" +
-                   Convert.ToBase64String(salt) + ":" +
-                   Convert.ToBase64String(hash);
+            // derive a 256-bit subkey (use HMACSHA1 with 10,000 iterations)
+            string hashed = Convert.ToBase64String(KeyDerivation.Pbkdf2(
+                password: password,
+                salt: salt,
+                prf: KeyDerivationPrf.HMACSHA1,
+                iterationCount: 10000,
+                numBytesRequested: 256 / 8)
+            );
+
+            return hashed;
         }
 
         public static bool ValidatePassword(string password, string correctHash)
         {
-            char[] delimiter = { ':' };
-            var split = correctHash.Split(delimiter);
-            var iterations = Int32.Parse(split[IterationIndex]);
-            var salt = Convert.FromBase64String(split[SaltIndex]);
-            var hash = Convert.FromBase64String(split[Pbkdf2Index]);
+            string hashForPassword = HashPassword(password);
 
-            var testHash = GetPbkdf2Bytes(password, salt, iterations, hash.Length);
-            return SlowEquals(hash, testHash);
-        }
-
-        private static bool SlowEquals(byte[] a, byte[] b)
-        {
-            var diff = (uint)a.Length ^ (uint)b.Length;
-            for (int i = 0; i < a.Length && i < b.Length; i++)
+            if (hashForPassword.Equals(correctHash))
             {
-                diff |= (uint)(a[i] ^ b[i]);
+                return true;
             }
-            return diff == 0;
+
+            return false;
         }
 
         private static byte[] GetPbkdf2Bytes(string password, byte[] salt, int iterations, int outputBytes)

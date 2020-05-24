@@ -2,30 +2,17 @@
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
-using System.Text;
-using Microsoft.Extensions.Configuration;
 
 namespace IHVolunteerAPI.Security
 {
     public class AES
     {
-        public static IConfiguration Configuration;
-
-        public AES(IConfiguration configuration)
+        public AES()
         {
-            Configuration = configuration;
         }
 
-        public static byte[] EncryptStringToBytes_Aes(string plainText)
+        public static byte[] EncryptStringToBytes_Aes(string plainText, byte[] Key, byte[] IV)
         {
-            // pulling env var
-            var apiKey = Configuration["API:Key"];
-            var apiInitializationVector = Configuration["API:IV"];
-
-            // Convert a string to a byte array  
-            byte[] Key = Encoding.UTF8.GetBytes(apiKey);
-            byte[] IV = Encoding.UTF8.GetBytes(apiInitializationVector);
-
             // Check arguments.
             if (plainText == null || plainText.Length <= 0)
                 throw new ArgumentNullException("plainText");

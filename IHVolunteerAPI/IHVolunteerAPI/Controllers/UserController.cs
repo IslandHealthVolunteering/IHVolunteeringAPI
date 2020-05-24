@@ -6,6 +6,7 @@ using System;
 using System.Security.Cryptography;
 using IHVolunteerAPI.Security;
 using System.Text;
+using Microsoft.Extensions.Configuration;
 
 namespace IHVolunteerAPI.Controllers
 {
@@ -13,10 +14,14 @@ namespace IHVolunteerAPI.Controllers
     public class UserController : Controller
     {
         readonly IHVolunteerAPIContext Context;
+        public static IConfiguration Configuration;
+        private string apiKey;
+        private string apiInitializationVector;
 
-        public UserController(IHVolunteerAPIContext context)
+        public UserController(IHVolunteerAPIContext context, IConfiguration configuration)
         {
             Context = context;
+            Configuration = configuration;
         }
 
         [HttpGet("{email}")]
@@ -109,8 +114,16 @@ namespace IHVolunteerAPI.Controllers
                     {
                         var secret = AES.RandomString(24);
 
+                        // pulling env var and store in variables for use
+                        apiKey = Configuration["API:Key"];
+                        apiInitializationVector = Configuration["API:IV"];
+
+                        // Convert a string to a byte array  
+                        byte[] Key = Encoding.UTF8.GetBytes(apiKey);
+                        byte[] IV = Encoding.UTF8.GetBytes(apiInitializationVector);
+
                         // Encrypt the string to an array of bytes.
-                        byte[] encrypted = AES.EncryptStringToBytes_Aes(secret);
+                        byte[] encrypted = AES.EncryptStringToBytes_Aes(secret, Key, IV);
                         string encryptedString = BitConverter.ToString(encrypted);
 
                         try
@@ -158,8 +171,16 @@ namespace IHVolunteerAPI.Controllers
             {
                 var secret = AES.RandomString(24);
 
+                // pulling env var and store in variables for use
+                apiKey = Configuration["API:Key"];
+                apiInitializationVector = Configuration["API:IV"];
+
+                // Convert a string to a byte array  
+                byte[] Key = Encoding.UTF8.GetBytes(apiKey);
+                byte[] IV = Encoding.UTF8.GetBytes(apiInitializationVector);
+
                 // Encrypt the string to an array of bytes.
-                byte[] encrypted = AES.EncryptStringToBytes_Aes(secret);
+                byte[] encrypted = AES.EncryptStringToBytes_Aes(secret, Key, IV);
 
                 // create login user
                 LoginUser loginUserToCreate = new LoginUser()
