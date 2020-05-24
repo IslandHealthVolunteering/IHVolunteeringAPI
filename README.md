@@ -10,6 +10,13 @@ dotnet run
 
 This should spin up the server locally, accessible on `https://localhost:5008/api/<Route>`.
 
+Note: You will need to set some environment variables (secrets) in order for the application to work. Locally, you can run:
+
+```bash
+dotnet user-secrets set "API:Key" "someapikey"
+dotnet user-secrets set "API:IV" "someinitvector"
+```
+
 ## Swagger
 A Swagger Open API spec for the API should load automatically when the application is run, but is also accessible on `https://localhost:5008`.
 
