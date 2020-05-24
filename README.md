@@ -10,7 +10,8 @@ dotnet run
 
 This should spin up the server locally, accessible on `https://localhost:5008/api/<Route>`.
 
-Note: You will need to set some environment variables (secrets) in order for the application to work. Locally, you can run:
+### Environment Variables (User Secrets)
+You will need to set some environment variables (user secrets) in order for the application to work. Locally, you can run:
 
 ```bash
 dotnet user-secrets set "API:Key" "someapikey"
